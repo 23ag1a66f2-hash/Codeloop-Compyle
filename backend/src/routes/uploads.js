@@ -64,7 +64,7 @@ const generateUniqueFilename = (originalname) => {
   const ext = path.extname(originalname);
   const name = path.basename(originalname, ext);
   const timestamp = Date.now();
-  const uuid = uuidv4().slice(0, 8);
+  const uuid = randomBytes(4).toString('hex');
   return `${name}_${timestamp}_${uuid}${ext}`;
 };
 
