@@ -274,12 +274,11 @@ assessmentSchema.statics.findByDepartment = function(departmentId, options = {})
     .skip((page - 1) * limit);
 };
 
-assessmentSchema.statics.findByUser = function(userId, options = {}) {
+assessmentSchema.statics.findByUser = async function(userId, options = {}) {
   const { page = 1, limit = 10, status = null } = options;
   const User = mongoose.model('User');
 
-  return User.findById(userId)
-    .then(user => {
+  const user = await User.findById(userId);
       const query = {
         isActive: true,
         $or: [
