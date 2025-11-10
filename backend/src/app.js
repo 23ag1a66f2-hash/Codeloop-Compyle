@@ -28,6 +28,17 @@ const app = express();
 // Connect to database
 connectDB();
 
+// Initialize default data after database connection
+mongoose.connection.once('open', async () => {
+  try {
+    const { initializeDefaults } = require('./models');
+    await initializeDefaults();
+    console.log('✓ Default data initialized successfully');
+  } catch (error) {
+    console.error('✗ Failed to initialize default data:', error);
+  }
+});
+
 // Security middleware
 app.use(helmet());
 app.use(compression());
